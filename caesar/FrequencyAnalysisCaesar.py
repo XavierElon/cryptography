@@ -35,11 +35,14 @@ def plot_distribution(frequencies):
 def caesar_crack(cipher_text):
     freq = frequency_analysis(cipher_text)
     print(freq)
-    plot_distribution(freq)
+    freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+    print(freq)
+    print("The possible key value: %s" % (LETTERS.find(freq[0][0]) - LETTERS.find('E')))
     
 if __name__ == '__main__':
     plain_text = 'In this course you will learn about cryptography and hashing in Python and Java as well. You will understand most of the private key (symmetric) and pubic key (asymmetric) cryptosystems on a step by step basis. You can learn about the theory as well as the implementation for every cryptographic algorithm - and how to crack these systems (so what are the weaknesses).'
     cipher_text = caesar_encrypt(plain_text)
     print(cipher_text)
-    freq = frequency_analysis(cipher_text)
-    plot_distribution(freq)
+    # freq = frequency_analysis(cipher_text)
+    caesar_crack(cipher_text)
+    # plot_distribution(freq)

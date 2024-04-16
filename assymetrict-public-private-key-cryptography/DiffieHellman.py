@@ -13,7 +13,6 @@ def generate_private_key(n, g):
     
 
 if __name__ == '__main__':
-     n = 37
-     g = 13
+     n = 37 g = 13
      
      generate_private_key(n, g)

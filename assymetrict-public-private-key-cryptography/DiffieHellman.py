@@ -11,4 +11,9 @@ def generate_private_key(n, g):
     print("Alice's private key %s" % pow(k2, x, n))
     print("Bob's private key %s" % pow(k1, y, n))
     
-    
+
+if __name__ == '__main__':
+     n = 37
+     g = 13
+     
+     generate_private_key(n, g)

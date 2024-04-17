@@ -19,3 +19,46 @@ def is_prime(num):
             return False
         
     return True
+
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+        
+    return a
+
+def modular_inverse(a, b):
+    if a == 0:
+        return b, 0, 1
+    
+    div, x1, y1 = modular_inverse(b % a, a)
+    
+    x = y1 - (b // a) * x1
+    y = x1
+    
+    return div, x, y
+
+def generate_large_prime(start=RANDOM_START, end=RANDOM_END):
+    num = random.randint(start, end)
+    
+    while not is_prime(num):
+        num = random.randint(start, end)
+        
+    return num
+
+def generate_rsa_keys():
+    p = generate_large_prime()
+    q = generate_large_prime()
+    
+    n = p * q
+    
+    phi = (p-1) * (q-1)
+    e = random.randrange(1, phi)
+    
+    while gcd(e, phi) != 1:
+        e = random.randrange(1, phi)
+
+    d = modular_inverse(e, phi)[1]
+    
+    return (d, n), (e, n)
+
+def encrypt(public_key, plain_text):

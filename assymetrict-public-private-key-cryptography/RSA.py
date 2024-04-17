@@ -62,3 +62,34 @@ def generate_rsa_keys():
     return (d, n), (e, n)
 
 def encrypt(public_key, plain_text):
+    e, n = public_key
+    
+    cipher_text = []
+    
+    for char in plain_text:
+        a = ord(char)
+        cipher_text.append(pow(a, e, n))
+        
+    return cipher_text
+
+def decrypt(private_key, cipher_text):
+    d, n = private_key
+    
+    plain_text = ''
+    
+    for num in cipher_text:
+        a = pow(num, d, n)
+        plain_text = plain_text + str(chr(a))
+    
+    return plain_text
+
+if __name__ == '__main__':
+    
+    private_key, public_key = generate_rsa_keys()
+    
+    message = 'This is an example message with RSA'
+    print('Original message: %s' % message)
+    cipher = encrypt(public_key, message)
+    print('Cipher text: %s' % cipher)
+    plain = decrypt(private_key, cipher)
+    print('Decrpyted text: %s' % plain)

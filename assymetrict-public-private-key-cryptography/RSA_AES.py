@@ -16,7 +16,17 @@ encrypt_rsa = PKCS1_OAEP.new(public_key)
 enc_session_key = encrypt_rsa.encrypt(session_key)
 
 cipher_aes = AES.new(session_key, AES.MODE_GCM)
-ciphertext, tag = cipher_aes.encrypt_and_digest()
+cipher_text, tag = cipher_aes.encrypt_and_digest(data)
 
-print('ciphertext %s ' % ciphertext)
+nonce = cipher_aes.nonce
+
+print('ciphertext %s ' % cipher_text)
 print('tag %s ' % tag)
+
+decrypt_rsa = PKCS1_OAEP.new(private_key)
+sess_key = decrypt_rsa.decrpyt(enc_session_key)
+
+decrypt_aes = AES.new(sess_key, AES.MODE_GCM, nonce)
+plain_text = decrypt_aes.decrpyt_and_verify(cipher_text, tag)
+
+print(plain_text.decode())

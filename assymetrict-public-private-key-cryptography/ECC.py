@@ -1,4 +1,4 @@
-
+import random
 
 class Point:
     
@@ -45,6 +45,18 @@ class EllipticCurveCryptography:
     
 if __name__ == '__main__':
     ecc = EllipticCurveCryptography(0, 7)
-    p = Point(1, 1)
+    generator_point = Point(-2, -1)
     # print(ecc.point_addition(p, p))
-    ecc.double_and_add(10, p)
+    # print(ecc.double_and_add(100, p))
+    
+    alice_random = random.randint(2, 1e4)
+    bob_random = random.randint(2, 1e4)
+    
+    alice_public = ecc.double_and_add(alice_random, generator_point)
+    bob_public = ecc.double_and_add(bob_random, generator_point)
+    
+    alice_secret_key = ecc.double_and_add(alice_random, bob_public)
+    bob_secret_key = ecc.double_and_add(bob_random, alice_public)
+    
+    print(alice_secret_key)
+    print(b ob_secret_key)
